@@ -9,3 +9,14 @@ Visual tracking of objects using Realsense D410 camera and UR10 robot.
 3. Proceed with RealSense library installation using vcpkg as described [here](https://github.com/IntelRealSense/librealsense).
 4. ```cmake . && make```
 
+
+# Downloading sample *.bag files
+
+```
+chmod +x download_sample_bag_files.sh
+./download_sample_bag_files.sh
+```
+Files will be saved in _./video_samples_ directory. 
+
+*WARNING: Significant amount of data!*
+

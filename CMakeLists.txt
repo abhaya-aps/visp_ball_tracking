@@ -17,6 +17,12 @@ find_package(realsense2 CONFIG REQUIRED)
 
 set(EXECUTABLE_OUTPUT_PATH ./build)
 
+#Create definition of a filepath to be used in simulation.cpp
+set(simulation_file "video_samples/stairs.bag")
+
+get_filename_component(PLAYBACK_ABS_FILEPATH "${simulation_file}" ABSOLUTE)
+
+#message(${PLAYBACK_ABS_FILEPATH})
 foreach(cpp ${example_cpp})
   visp_add_target(${cpp})
   if(COMMAND visp_add_dependency)
@@ -43,6 +49,9 @@ if(VISP_HAVE_REALSENSE2)
   list(APPEND CXX_FLAGS_MUTE_WARNINGS "-Wno-unqualified-std-cast-call")
 endif()
 
-add_executable(${CMAKE_PROJECT_NAME} Try1.cpp)
+# Add abs_path as a preprocessor macro
+add_definitions(-DPLAYBACK_ABS_FILEPATH="${PLAYBACK_ABS_FILEPATH}")
+
+add_executable(${CMAKE_PROJECT_NAME} simulation.cpp)
 target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE realsense2::fw realsense2::usb realsense2::rsutils realsense2::realsense2)
 target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE ${VISP_LIBRARIES})

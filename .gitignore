@@ -70,3 +70,4 @@ ehthumbs.db
 
 # Ignore custom user-specific files
 config.user
+video_samples/
