@@ -1,6 +1,6 @@
 #include <iostream>
 #include <opencv2/opencv.hpp>
-#include <librealsense2/rs.hpp>
+#include <rs.hpp>
 // Function to estimate distance (in centimeters) based on the depth information
 double estimateDistance(const cv::Mat& depth_map, int cx, int cy) {
     // Access the depth value at the specified pixel

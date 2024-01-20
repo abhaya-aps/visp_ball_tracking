@@ -1,60 +1,27 @@
-#############################################################################
-#
-# ViSP, open source Visual Servoing Platform software.
-# Copyright (C) 2005 - 2023 by Inria. All rights reserved.
-#
-# This software is free software; you can redistribute it and/or modify
-# it under the terms of the GNU General Public License as published by
-# the Free Software Foundation; either version 2 of the License, or
-# (at your option) any later version.
-# See the file LICENSE.txt at the root directory of this source
-# distribution for additional information about the GNU GPL.
-#
-# For using ViSP with software that can not be combined with the GNU
-# GPL, please contact Inria about acquiring a ViSP Professional
-# Edition License.
-#
-# See https://visp.inria.fr for more information.
-#
-# This software was developed at:
-# Inria Rennes - Bretagne Atlantique
-# Campus Universitaire de Beaulieu
-# 35042 Rennes Cedex
-# France
-#
-# If you have questions regarding the use of this file, please contact
-# Inria at visp@inria.fr
-#
-# This file is provided AS IS with NO WARRANTY OF ANY KIND, INCLUDING THE
-# WARRANTY OF DESIGN, MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.
-#
-# Description:
-# ViSP configuration file.
-#
-#############################################################################
-
-project(example-servo-universal-robots)
-
 cmake_minimum_required(VERSION 3.5)
 
+project(visp_ball_tracking_test)
+
+
+include($ENV{VISP_WS}/vcpkg/scripts/buildsystems/vcpkg.cmake) 
+include_directories(${VISP_INCLUDE_DIRS})
+include_directories($ENV{VISP_WS}/vcpkg/installed/x64-linux/lib/)
+include_directories($ENV{VISP_WS}/vcpkg/installed/x64-linux/include/librealsense2/)
+ 
 find_package(VISP REQUIRED visp_robot visp_io)
+include(CMakePrintHelpers)
 
+# search for vcpkg managed realsense library
+set(realsense2_DIR "$ENV{VISP_WS}/vcpkg/installed/x64-linux/lib/realsense2/")
+find_package(realsense2 CONFIG REQUIRED)
 
-
-set(example_cpp
-  servoUniversalRobotsIBVS.cpp
-  servoUniversalRobotsPBVS.cpp
-  UniversalRobotsMoveToPosition.cpp
-  UniversalRobotsSavePosition.cpp
-  TryPBVS.cpp
-  Try1.cpp
-  Try2.cpp
-)
+set(EXECUTABLE_OUTPUT_PATH ./build)
 
 foreach(cpp ${example_cpp})
   visp_add_target(${cpp})
   if(COMMAND visp_add_dependency)
     visp_add_dependency(${cpp} "examples")
+    visp_set_source_file_compile_flag(${cpp} ${CXX_FLAGS_MUTE_WARNINGS})
   endif()
 endforeach()
 
@@ -76,10 +43,6 @@ if(VISP_HAVE_REALSENSE2)
   list(APPEND CXX_FLAGS_MUTE_WARNINGS "-Wno-unqualified-std-cast-call")
 endif()
 
-visp_set_source_file_compile_flag(servoUniversalRobotsIBVS.cpp ${CXX_FLAGS_MUTE_WARNINGS})
-visp_set_source_file_compile_flag(servoUniversalRobotsPBVS.cpp ${CXX_FLAGS_MUTE_WARNINGS})
-visp_set_source_file_compile_flag(UniversalRobotsMoveToPosition.cpp ${CXX_FLAGS_MUTE_WARNINGS})
-visp_set_source_file_compile_flag(UniversalRobotsSavePosition.cpp ${CXX_FLAGS_MUTE_WARNINGS})
-visp_set_source_file_compile_flag(TryPBVS.cpp ${CXX_FLAGS_MUTE_WARNINGS})
-visp_set_source_file_compile_flag(Try1.cpp ${CXX_FLAGS_MUTE_WARNINGS})
-visp_set_source_file_compile_flag(Try2.cpp ${CXX_FLAGS_MUTE_WARNINGS})
+add_executable(${CMAKE_PROJECT_NAME} Try1.cpp)
+target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE realsense2::fw realsense2::usb realsense2::rsutils realsense2::realsense2)
+target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE ${VISP_LIBRARIES})

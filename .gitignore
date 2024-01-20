@@ -1,2 +1,72 @@
 .vscode/
 *.FCStd
+
+# Ignore build artifacts and executable files
+/build/
+/bin/
+/lib/
+
+# Ignore CMake generated files
+CMakeFiles/
+CMakeCache.txt
+CMakeScripts/
+cmake_install.cmake
+Makefile
+
+# Ignore user-specific files/directories
+*.swp
+*.user
+*.suo
+*.userprefs
+*.sln.docstates
+
+# Ignore compiled object files and libraries
+*.o
+*.a
+*.so
+*.dylib
+
+# Ignore Visual Studio Code files
+.vscode/
+
+# Ignore the generated documentation folder
+/doc/
+
+# Ignore compiled executables
+*.exe
+*.out
+
+# Ignore dependency management folders
+vcpkg_installed/
+vcpkg/
+
+# Ignore generated IDE project files
+*.cbp
+*.workspace
+*.suo
+*.user
+
+# Ignore logs and databases
+*.log
+*.sql
+*.sqlite
+
+# Ignore macOS system files
+.DS_Store
+
+# Ignore Linux system files
+Thumbs.db
+ehthumbs.db
+
+# Ignore Windows Installer files
+*.cab
+*.msi
+*.msm
+*.msp
+
+# Ignore temporary files and directories
+*.tmp
+*~
+
+# Ignore custom user-specific files
+config.user
