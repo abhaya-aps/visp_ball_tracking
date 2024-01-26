@@ -22,7 +22,9 @@ sudo apt update
 sudo apt install libxinerama-dev libxcursor-dev xorg-dev libglu1-mesa-dev pkg-config libglfw3 libglfw3-dev
 ./vcpkg install glfw3
 ./vcpkg install opengl
-./vcpkg integrate install
+./vcpkg install boost
+./vcpkg install opencv2
+./vcpkg integrate install #I am not saure if we need it here
 
 ```
 
